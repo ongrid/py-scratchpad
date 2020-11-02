@@ -1,3 +1,17 @@
+async-generator==1.10
+async-service==0.1.0a11
+asyncio==3.4.3
+attrs==20.2.0
 click==7.1.2
 h11==0.11.0
+idna==2.10
+mypy==0.790
+mypy-extensions==0.4.3
+outcome==1.0.1
+sniffio==1.2.0
+sortedcontainers==2.2.2
+trio==0.16.0
+trio-typing==0.5.0
+typed-ast==1.4.1
+typing-extensions==3.7.4.3
 uvicorn==0.12.2
