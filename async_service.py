@@ -3,32 +3,39 @@ import logging
 
 class Server:
 
-    def run(self):
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        loop.run_until_complete(self.serve())
+    counter = 0
+
+    async def run(self):
+        task_main_loop = asyncio.create_task(self.main_loop())
+        task_sum_loop1 = asyncio.create_task(self.summator_loop(1,100))
+        task_sum_loop2 = asyncio.create_task(self.summator_loop(2,100))
+        task_sum_loop3 = asyncio.create_task(self.summator_loop(3,100))
+        task_sum_loop4 = asyncio.create_task(self.summator_loop(4,100))
+        await task_main_loop
+        await task_sum_loop1
+        await task_sum_loop2
+        await task_sum_loop3
+        await task_sum_loop4
 
     async def main_loop(self):
         i = 0
-        while True:
-            await asyncio.sleep(1)
+        for i in range(100):
+            await asyncio.sleep(0.1)
             i += 1
-            print("main %s" % i)
+            self.counter += 1
+            print("main %s" % self.counter)
+    
+    async def summator_loop(self, name, amount):
+        for i in range(amount):
+            await asyncio.sleep(0.1)
+            i += 1
+            self.counter += 1
+            print("summator %s %s" % (name, self.counter))
 
-    async def serve(self, sockets=None):
-        print("start serve")
-        await self.main_loop()
-        await self.shutdown()
-
-    async def startup(self, sockets=None):
-        loop = asyncio.get_event_loop()
-
-    async def shutdown(self, sockets=None):
-        print("Shutting down")
 
 def main():
     server = Server()
-    server.run()
+    asyncio.run(server.run())
     
 
 if __name__ == "__main__":
